@@ -17,8 +17,8 @@ class aluno{
         float media  = (nota1 + nota2) / 2;;
 
     public:
-        aluno();
-        ~aluno();
+        aluno(){};
+        ~aluno(){};
 
         int getMat(){ return this->matricula;};
         string getNome(){return this->nome;};
@@ -46,7 +46,7 @@ class aluno{
             cout << endl << this->matricula << " " << this->nome << " "
             << this->nota1 << " " << this->nota2;
 
-        }
+        };
 
 };
 
@@ -82,11 +82,13 @@ int main(){
     fstream arquivo;
     aluno li;
 
-    char chave;
+    char chave = 's';
 
     arquivo.open("a:arquivo.txt",ios::ate|ios::out|ios::in);
+    
     if(arquivo.is_open()){ 
-         do{
+        
+        do{
             li.novoAluno();
             arquivo.write((char*)&li,sizeof(aluno));
             cout << "\nInserir novo Aluno (s/n)";
@@ -101,7 +103,7 @@ int main(){
     
 
     } else {
-        cout << "Erro ao abrir o arquivo!";
+        cout << "\nErro ao abrir o arquivo!\n\n";
         exit(1);
     }
 
