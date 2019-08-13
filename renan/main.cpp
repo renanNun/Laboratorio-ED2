@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/* Exercicício Proposto do capítulo 1, notas de aulas página 24. Sobre leitura de arquivos */
+
+
 class aluno{
 
     private:
@@ -50,7 +53,7 @@ class aluno{
 
 };
 
-int main(){
+int main(int argc, char *argv[]){
    
     /*ofstream arquivo;
     arquivo.open("arquivo.txt");
