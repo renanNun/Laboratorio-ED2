@@ -1,40 +1,38 @@
 /**
     Universidade Federal de Juiz de Fora
-    LeitorGameInfo.h
-    Propósito: Leitor do arquivo pre processado'games_detailed_info.csv' 
+    LeitorUsersRated.h
+    Propósito: Leitor do arquivo pre processado '2019-05-02.csv' 
 
-    @version 1.0 19/08/19
+    @version 1.0 21/08/19
 */
-#ifndef LEITORGAMEINFO_H
-#define LEITORGAMEINFO_H
+#ifndef LEITORUSERSRATED_H
+#define LEITORUSERSRATED_H
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
-#include "LeitorBase.h"
-#include "GameInfo.h"
+#include "UsersRated.h"
 
 using namespace std;
 
-class LeitorGameInfo : protected LeitorBase
+class LeitorUsersRated : protected LeitorBase
 {
     public:
 
-        LeitorGameInfo(int numRegistros){
-            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"bgg-13m-reviews.csv";
+        LeitorUsersRated(int numRegistros){
+            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"2019-05-02.csv";
             this->numRegistros = numRegistros;
-            lerArquivo();            
+            lerArquivo();
         };
-        ~LeitorGameInfo(){}; 
+        ~LeitorUsersRated(){}; 
 
-        GameInfo* getDataset(){
+        UsersRated* getDataset(){
             return dataset;
         }
 
     private:
-
-        GameInfo *dataset;
+        UsersRated *dataset;
         string caminhoArquivo;
         int numRegistros;
         string line;
@@ -54,10 +52,10 @@ class LeitorGameInfo : protected LeitorBase
                 cout << "Impossivel abrir o arquivo para leitura";
                 exit(1); // sai do programa se nao conseguir abrir o arquivo
             }
-            
+
             headerProcessado=false;
-            idMin=99999999;
-            idMax=-99999999;
+            gerarSemente();//gera uma nova semente para essa execução
+            
             while (getline(arqEntrada, line))
             {
                 vector<string> result = explode(line, ',');
@@ -67,31 +65,32 @@ class LeitorGameInfo : protected LeitorBase
                     headerProcessado=true;
 
                     //inicia o vetor de objetos do dataset
-                    dataset = new GameInfo[numRegistros];
+                    dataset = new UsersRated[numRegistros];
                     linePos=0;
-                    idMin=9999999;
-                    idMax=-9999999;
+                    idMin=99999999;
+                    idMax=-99999999;
                 } else {
-
                     //preenche o dataset
-                    GameInfo g;
-                    g.id = stoi(result[0]);
-                    g.boardgamecategory = explode(result[1], '|');
-                    dataset[linePos] = g;
+                    //if(getRand(1)){
+                        UsersRated u;
+                        u.id = stoi(result[0]);
+                        u.usersRated = stoi(result[1]);
+                        dataset[linePos] = u;
 
-                    //id minimo
-                    if(g.id < idMin){
-                        idMin = g.id;
-                    }
-                    //id maximo
-                    if(g.id > idMax){
-                        idMax = g.id;
-                    }
+                        //id minimo
+                        if(u.id < idMin){
+                            idMin = u.id;
+                        }
+                        //id maximo
+                        if(u.id > idMax){
+                            idMax = u.id;
+                        }
 
-                    linePos++;
-                    if(linePos>=numRegistros){
-                        break;
-                    }     
+                        linePos++;
+                        if(linePos>=numRegistros){
+                            break;
+                        }   
+                    //}                 
                 }
             }
 
@@ -101,4 +100,4 @@ class LeitorGameInfo : protected LeitorBase
         }
 };
 
-#endif // LEITORGAMEINFO_H
+#endif // LEITORUSERSRATED_H

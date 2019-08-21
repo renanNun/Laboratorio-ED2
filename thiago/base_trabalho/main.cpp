@@ -12,13 +12,25 @@
 #include <iostream>
 
 #include "Memoria.h"
+#include "Log.h"
+#include <time.h>
+#include <chrono>
+//classes de entidade
 #include "UserReview.h"
 #include "GameInfo.h"
-#include "Log.h"
+#include "UsersRated.h"
+//classes de leitura
 #include "LeitorGameInfo.h"
 #include "LeitorUserReviews.h"
+#include "LeitorUsersRated.h"
 
 using namespace std;
+
+uint64_t unix_timestamp()
+{
+    uint64_t now = chrono::duration_cast<std::chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    return now;
+}
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +38,9 @@ int main(int argc, char *argv[])
     //cout << "Uso de memoria atual: " << memInfo.getCurrentRSS() << endl;
     int peakMemoryIni = memInfo.getPeakRSS();
 
-    int numRegistros = 10000;
+    cout << "---------- INICIO -----------" << endl;
+
+    int numRegistros = 100;
     LeitorGameInfo *gameInfo = new LeitorGameInfo(numRegistros);
 
     GameInfo *dataset = gameInfo->getDataset();
@@ -59,13 +73,29 @@ int main(int argc, char *argv[])
     }
     */
 
+    //////////////////
+    cout << endl;
+
+    int numRegistrosUsrRated = 5;
+    LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
+
+    UsersRated *dataset3 = usersRated->getDataset();
+
+    cout << numRegistrosUsrRated << " registros do arquivo de Users Rated" << endl;
+    
+    for(int i=0; i<numRegistrosUsrRated; i++){
+        cout << "id: " << dataset3[i].id << ", ";
+        cout << "users rated: " << dataset3[i].usersRated << endl;
+    }
+    
+
     int memUsada = memInfo.getPeakRSS() - peakMemoryIni;
-    int memUsadaKB = memUsada / 1024;
+    float memUsadaKB = memUsada / (float)1024;
     //cout << "Uso de memoria atual: " << memInfo.getCurrentRSS() << endl;
     if(memUsadaKB < 1024){
         cout << "Maximo de memoria usada: " << memUsadaKB << "Kb" << endl;
     } else {
-        int memUsadaMB = memUsadaKB / 1024;
+        float memUsadaMB = memUsadaKB / (float)1024;
         cout << "Maximo de memoria usada: " << memUsadaMB << "Mb" << endl;
     }
     

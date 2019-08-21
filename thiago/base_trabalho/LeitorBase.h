@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
 
 using namespace std;
 
@@ -40,7 +41,17 @@ class LeitorBase
             if(buff != "") v.push_back(buff);
             
             return v;
+        }
+        void gerarSemente() {
+            semente = time(NULL);
+            srand (semente);
         } 
+        int getRand(int maxRand){
+            return rand() % maxRand;
+        }
+    private:
+
+        int semente;
 };
 
 #endif // LEITORBASE_H

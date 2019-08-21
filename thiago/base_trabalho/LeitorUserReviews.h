@@ -67,6 +67,8 @@ class LeitorUserReviews : protected LeitorBase
                     //inicia o vetor de objetos do dataset
                     dataset = new UserReview[numRegistros];
                     linePos=0;
+                    idMin=99999999;
+                    idMax=-99999999;
                 } else {
                     //preenche o dataset
                     UserReview u;
@@ -74,6 +76,16 @@ class LeitorUserReviews : protected LeitorBase
                     u.user = result[1];
                     u.rating = stof(result[2]);
                     dataset[linePos] = u;
+
+                    //id minimo
+                    if(u.id < idMin){
+                        idMin = u.id;
+                    }
+                    //id maximo
+                    if(u.id > idMax){
+                        idMax = u.id;
+                    }
+
 
                     linePos++;
                     if(linePos>=numRegistros){

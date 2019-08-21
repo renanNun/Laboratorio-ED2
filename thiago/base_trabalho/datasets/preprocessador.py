@@ -22,6 +22,9 @@ arquivo_reviews_pre = "preprocessado\\bgg-13m-reviews.csv"
 arquivo_game_details = "originais\\games_detailed_info.csv"
 arquivo_game_details_pre = "preprocessado\\games_detailed_info.csv"
 
+arquivo_users_rated = "originais\\2019-05-02.csv"
+arquivo_users_rated_pre = "preprocessado\\2019-05-02.csv"
+
 
 debug = False
 
@@ -86,10 +89,36 @@ with open(arquivo_game_details, encoding="utf8") as arquivo:
             for c in categorias:
                 if(str_categorias != ""):
                     str_categorias += "|"
-                str_categorias += c.strip(' ')22.replace(',','&comma;')
+                str_categorias += c.strip(' ').replace(',','&comma;')
 
             arquivo_pre.write(id + ',' + str_categorias + "\n")
         
+        cont+=1
+        
+arquivo_pre.close()
+
+#executa preprocessamento para o arquivo users rated
+#%%
+
+
+arquivo_pre = open(arquivo_users_rated_pre, mode='w', encoding="utf8")
+cont = 0
+
+with open(arquivo_users_rated, encoding="utf8") as arquivo:
+
+    csv_r = csv.reader(arquivo, delimiter=',')
+ 
+    for row in csv_r:
+        if(cont>20 and debug==True):
+            break
+
+        if(cont==0):
+            arquivo_pre.write("id,Users rated\n")
+        else:
+            id = row[0]
+            users_rated = row[6]
+
+            arquivo_pre.write(id + ',' + users_rated + "\n")
         cont+=1
         
 arquivo_pre.close()
