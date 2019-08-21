@@ -3,8 +3,8 @@
     main.cpp
 
     *** comando pra rodar ***
-    MAC/LINUX:  clear && g++ -std=c++11 main.cpp -o main && ./main
-    WINDOWS:    cls & g++ -std=c++11 main.cpp -o main & main.exe
+    MAC/LINUX:  clear && g++ -std=c++11 main.cpp mergeSort.cpp -o main && ./main
+    WINDOWS:    cls & g++ -std=c++11 main.cpp mergeSort.cpp -o main & main.exe
 
     @author Thiago Almeida
     @version 1.0 07/08/19
@@ -24,6 +24,9 @@
 #include "LeitorUserReviews.h"
 #include "LeitorUsersRated.h"
 
+//ordenação
+#include "mergeSort.h"
+
 using namespace std;
 
 uint64_t unix_timestamp()
@@ -40,54 +43,26 @@ int main(int argc, char *argv[])
 
     cout << "---------- INICIO -----------" << endl;
 
-    int numRegistros = 100;
-    LeitorGameInfo *gameInfo = new LeitorGameInfo(numRegistros);
-
-    GameInfo *dataset = gameInfo->getDataset();
-
-    cout << numRegistros << " registros do arquivo de Game Info" << endl;
-    /*
-    for(int i=0; i<numRegistros; i++){
-        GameInfo gameInfo = dataset[i];
-        cout << "id: " << gameInfo.id << ", boardgamecategory: ";
-        for(int j=0; j<gameInfo.boardgamecategory.size(); j++){
-            cout << gameInfo.boardgamecategory[j] << ", ";
-        }
-        cout << endl;
-    }*/
-
-    //////////////////
-    cout << endl;
-
-    LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistros);
-
-    UserReview *dataset2 = userReviews->getDataset();
-
-    cout << numRegistros << " registros do arquivo de User Reviews" << endl;
-    /*
-    for(int i=0; i<numRegistros; i++){
-        UserReview userReview = dataset2[i];
-        cout << "id: " << userReview.id << ", ";
-        cout << "user: " << userReview.user << ", ";
-        cout << "rating: " << userReview.rating << endl;
-    }
-    */
-
-    //////////////////
-    cout << endl;
-
-    int numRegistrosUsrRated = 5;
+    int numRegistrosUsrRated = 50;
     LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
     UsersRated *dataset3 = usersRated->getDataset();
 
-    cout << numRegistrosUsrRated << " registros do arquivo de Users Rated" << endl;
+    cout << " registros antes de ordenar" << endl;
     
     for(int i=0; i<numRegistrosUsrRated; i++){
         cout << "id: " << dataset3[i].id << ", ";
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
     
+    mergeSort(dataset3, 0, numRegistrosUsrRated-1);
+
+    cout << " registros depois de ordenar" << endl;
+
+    for(int i=0; i<numRegistrosUsrRated; i++){
+        cout << "id: " << dataset3[i].id << ", ";
+        cout << "users rated: " << dataset3[i].usersRated << endl;
+    }
 
     int memUsada = memInfo.getPeakRSS() - peakMemoryIni;
     float memUsadaKB = memUsada / (float)1024;
@@ -100,7 +75,6 @@ int main(int argc, char *argv[])
         float memUsadaMB = memUsadaKB / (float)1024;
         cout << "Maximo de memoria usada: " << memUsadaMB << "Mb" << endl;
     }
-    
     
     return 0;
 }

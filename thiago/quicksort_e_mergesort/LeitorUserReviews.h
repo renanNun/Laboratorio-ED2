@@ -1,38 +1,39 @@
 /**
     Universidade Federal de Juiz de Fora
-    LeitorUsersRated.h
-    Propósito: Leitor do arquivo pre processado '2019-05-02.csv' 
+    LeitorUserReviews.h
+    Propósito: Leitor do arquivo pre processado 'bgg-13m-reviews.csv' 
 
-    @version 1.0 21/08/19
+    @version 1.0 18/08/19
 */
-#ifndef LEITORUSERSRATED_H
-#define LEITORUSERSRATED_H
+#ifndef LEITORUSERREVIEWS_H
+#define LEITORUSERREVIEWS_H
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
-#include "UsersRated.h"
+#include "UserReview.h"
+#include "GameInfo.h"
 
 using namespace std;
 
-class LeitorUsersRated : protected LeitorBase
+class LeitorUserReviews : protected LeitorBase
 {
     public:
 
-        LeitorUsersRated(int numRegistros){
-            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"2019-05-02.csv";
+        LeitorUserReviews(int numRegistros){
+            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"bgg-13m-reviews.csv";
             this->numRegistros = numRegistros;
             lerArquivo();
         };
-        ~LeitorUsersRated(){}; 
+        ~LeitorUserReviews(){}; 
 
-        UsersRated* getDataset(){
+        UserReview* getDataset(){
             return dataset;
         }
 
     private:
-        UsersRated *dataset;
+        UserReview *dataset;
         string caminhoArquivo;
         int numRegistros;
         string line;
@@ -54,7 +55,6 @@ class LeitorUsersRated : protected LeitorBase
             }
 
             headerProcessado=false;
-            gerarSemente();//gera uma nova semente para essa execução
             
             while (getline(arqEntrada, line))
             {
@@ -65,33 +65,32 @@ class LeitorUsersRated : protected LeitorBase
                     headerProcessado=true;
 
                     //inicia o vetor de objetos do dataset
-                    dataset = new UsersRated[numRegistros];
+                    dataset = new UserReview[numRegistros];
                     linePos=0;
                     idMin=99999999;
                     idMax=-99999999;
                 } else {
                     //preenche o dataset
-                    //cout << getRand(1) << endl;
-                    //if(getRand(1)){
-                        UsersRated u;
-                        u.id = stoi(result[0]);
-                        u.usersRated = stoi(result[1]);
-                        dataset[linePos] = u;
+                    UserReview u;
+                    u.id = stoi(result[0]);
+                    u.user = result[1];
+                    u.rating = stof(result[2]);
+                    dataset[linePos] = u;
 
-                        //id minimo
-                        if(u.id < idMin){
-                            idMin = u.id;
-                        }
-                        //id maximo
-                        if(u.id > idMax){
-                            idMax = u.id;
-                        }
+                    //id minimo
+                    if(u.id < idMin){
+                        idMin = u.id;
+                    }
+                    //id maximo
+                    if(u.id > idMax){
+                        idMax = u.id;
+                    }
 
-                        linePos++;
-                        if(linePos>=numRegistros){
-                            break;
-                        }   
-                    //}                 
+
+                    linePos++;
+                    if(linePos>=numRegistros){
+                        break;
+                    }                    
                 }
             }
 
@@ -101,4 +100,4 @@ class LeitorUsersRated : protected LeitorBase
         }
 };
 
-#endif // LEITORUSERSRATED_H
+#endif // LEITORUSERREVIEWS_H
