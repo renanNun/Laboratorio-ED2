@@ -18,7 +18,7 @@ void mergeSort(int vet[], int inicio, int fim)
 void intercala(int vet[], int inicio, int meio, int fim)
 {
 
-    int auxiliar[10];
+    int auxiliar[fim+1];
     int inicioVetor2, inicioVetor1, posicaoLivre;
     inicioVetor1 = inicio;
     inicioVetor2 = meio + 1;
