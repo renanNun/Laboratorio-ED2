@@ -136,3 +136,7 @@ obj/
 .history
 
 # End of https://www.gitignore.io/api/clion,codeblocks,visualstudiocode
+
+#adicionados manualmente
+base_trabalho/datasets/originais/
+base_trabalho/datasets/preprocessado/
