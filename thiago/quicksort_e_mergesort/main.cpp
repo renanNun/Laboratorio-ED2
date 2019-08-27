@@ -26,6 +26,7 @@
 
 //ordenação
 #include "mergeSort.h"
+#include "quickSort.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
 
     cout << "---------- INICIO -----------" << endl;
 
-    int numRegistrosUsrRated = 50;
+    int numRegistrosUsrRated = 5;
     LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
     UsersRated *dataset3 = usersRated->getDataset();
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
     
-    mergeSort(dataset3, 0, numRegistrosUsrRated-1);
+    quickSort2(dataset3, 0, numRegistrosUsrRated-1);
 
     cout << " registros depois de ordenar" << endl;
 
