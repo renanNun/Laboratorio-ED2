@@ -23,6 +23,12 @@
 #include "LeitorGameInfo.h"
 #include "LeitorUserReviews.h"
 #include "LeitorUsersRated.h"
+//ordenação
+#include "ordenacao/BubbleSort.h"
+#include "ordenacao/InsertionSort.h"
+#include "ordenacao/SelectionSort.h"
+#include "ordenacao/MergeSort.h"
+#include "ordenacao/QuickSort.h"
 
 using namespace std;
 
@@ -39,13 +45,14 @@ int main(int argc, char *argv[])
     int peakMemoryIni = memInfo.getPeakRSS();
 
     cout << "---------- INICIO -----------" << endl;
-
+/*
     int numRegistros = 100;
     LeitorGameInfo *gameInfo = new LeitorGameInfo(numRegistros);
 
     GameInfo *dataset = gameInfo->getDataset();
 
     cout << numRegistros << " registros do arquivo de Game Info" << endl;
+    */
     /*
     for(int i=0; i<numRegistros; i++){
         GameInfo gameInfo = dataset[i];
@@ -58,12 +65,13 @@ int main(int argc, char *argv[])
 
     //////////////////
     cout << endl;
-
+/*
     LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistros);
 
     UserReview *dataset2 = userReviews->getDataset();
 
     cout << numRegistros << " registros do arquivo de User Reviews" << endl;
+    */
     /*
     for(int i=0; i<numRegistros; i++){
         UserReview userReview = dataset2[i];
@@ -76,7 +84,7 @@ int main(int argc, char *argv[])
     //////////////////
     cout << endl;
 
-    int numRegistrosUsrRated = 5;
+    int numRegistrosUsrRated = 500;
     LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
     UsersRated *dataset3 = usersRated->getDataset();
@@ -88,6 +96,39 @@ int main(int argc, char *argv[])
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
     
+    uint64_t inicio = unix_timestamp();
+    //BubbleSort<UsersRated> *bubbleSort = new BubbleSort<UsersRated>();
+    //bubbleSort->ordenar(dataset3, numRegistrosUsrRated);
+
+    //InsertionSort<UsersRated> *insertionSort = new InsertionSort<UsersRated>();
+    //insertionSort->ordenar(dataset3, numRegistrosUsrRated);
+
+    //SelectionSort<UsersRated> *selectionSort = new SelectionSort<UsersRated>();
+    //selectionSort->ordenar(dataset3, numRegistrosUsrRated);
+
+    //MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
+    //mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+
+    QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
+    quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+
+    //calcula o tempo
+    uint64_t fim = unix_timestamp();
+    double tempo = (fim-inicio)/(double)1000;
+    
+
+    //imprime o vetor
+    
+    cout << "registros do arquivo de Users Rated ordenados" << endl;
+    for(int i=0; i<numRegistrosUsrRated; i++){
+        cout << "id: " << dataset3[i].id << ", ";
+        cout << "users rated: " << dataset3[i].usersRated << endl;
+    }
+    
+
+    cout << inicio << ", " << fim << endl;
+
+    cout << endl << "Tempo de execucao: " << tempo << " seg" << endl;
 
     int memUsada = memInfo.getPeakRSS() - peakMemoryIni;
     float memUsadaKB = memUsada / (float)1024;

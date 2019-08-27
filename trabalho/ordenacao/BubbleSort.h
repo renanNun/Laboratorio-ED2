@@ -14,6 +14,7 @@
 
 using namespace std;
 
+template <class T>
 class BubbleSort
 {
     public:
@@ -21,20 +22,20 @@ class BubbleSort
         ~BubbleSort(){};
 
         //metodos da classe
-        void ordenar(int* vetor, int tam){
+        void ordenar(T* vetor, int tam){
             for(int i=0; i<tam-1; i++){
                 for(int j=0; j<tam-1; j++){
-                    if(vetor[j] > vetor[j+1]){
+                    if(vetor[j].id > vetor[j+1].id){
                         troca(vetor, j, j+1);
                     }
                 }
             }
         }
-        void ordenar_melhorado(int* vetor, int tam){
+        void ordenar_melhorado(T* vetor, int tam){
             for(int i=0; i<tam-1; i++){
                 bool trocou=false;
                 for(int j=0; j<tam-1-i; j++){
-                    if(vetor[j] > vetor[j+1]){
+                    if(vetor[j].id > vetor[j+1].id){
                         troca(vetor, j, j+1);
                         trocou=true;
                     }
@@ -46,8 +47,8 @@ class BubbleSort
         }
     private:
 
-        void troca(int* vetor, int p1, int p2){
-            int aux = vetor[p1];
+        void troca(T* vetor, int p1, int p2){
+            T aux = vetor[p1];
             vetor[p1] = vetor[p2];
             vetor[p2] = aux;
         }

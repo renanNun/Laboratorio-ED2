@@ -19,8 +19,6 @@ public:
             ordenar(vetor,p+1,fim);
 
         }
-
-
     };
 
 
@@ -52,4 +50,4 @@ private:
         //cout << "trocou" << endl;
     };
 
-};
+};  

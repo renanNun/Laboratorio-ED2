@@ -14,6 +14,7 @@
 
 using namespace std;
 
+template <class T>
 class InsertionSort
 {
     public:
@@ -21,11 +22,11 @@ class InsertionSort
         ~InsertionSort(){};
 
         //metodos da classe
-        void ordenar(int* vetor, int tam){
+        void ordenar(T* vetor, int tam){
             for(int i=0; i<tam; i++){
-                int pivo=vetor[i];
+                T pivo=vetor[i];
                 int j=i-1;
-                while(j>=0 && vetor[j] > pivo){
+                while(j>=0 && vetor[j].id > pivo.id){
                     vetor[j+1] = vetor[j];
                     j-=1;
                 }
