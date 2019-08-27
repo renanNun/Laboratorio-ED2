@@ -56,7 +56,8 @@ int main(int argc, char *argv[])
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
     
-    quickSort2(dataset3, 0, numRegistrosUsrRated-1);
+    //mergeSort(dataset3, 0, numRegistrosUsrRated-1);
+    quickSort(dataset3,0, numRegistrosUsrRated-1);
 
     cout << " registros depois de ordenar" << endl;
 
