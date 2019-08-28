@@ -41,8 +41,8 @@ class LeitorGameInfo : protected LeitorBase
         ifstream arqEntrada;
         bool headerProcessado;
         int linePos;
-        int idMin;
-        int idMax;
+        int ri, rf;
+        int idMin, idMax;
 
         void lerArquivo(){
             //abre o arquivo
@@ -56,8 +56,7 @@ class LeitorGameInfo : protected LeitorBase
             }
             
             headerProcessado=false;
-            idMin=99999999;
-            idMax=-99999999;
+
             while (getline(arqEntrada, line))
             {
                 vector<string> result = explode(line, ',');
@@ -68,16 +67,30 @@ class LeitorGameInfo : protected LeitorBase
 
                     //inicia o vetor de objetos do dataset
                     dataset = new GameInfo[numRegistros];
-                    linePos=0;
-                    idMin=9999999;
-                    idMax=-9999999;
+
+                    //guarda o id minimo e máximo do dataset
+                    idMin=99999999;
+                    idMax=-99999999;
+                    ri=0;//aponta pro inicio do dataset
+                    rf=numRegistros-1;//aponta pro fim do dataset
                 } else {
 
-                    //preenche o dataset
+                    //cria o objeto
                     GameInfo g;
                     g.id = stoi(result[0]);
                     g.boardgamecategory = explode(result[1], '|');
-                    dataset[linePos] = g;
+
+                    if(getRand(10) > 5){
+                        //se o numero aleatorio for maior que 5
+                        //coloca o numero do final pro inicio
+                        dataset[rf]=g;
+                        rf--;//decrementa o ponteiro do fim
+                    } else {
+                        //se o numero aleatorio for menor ou igual a 5
+                        //coloca o numero do inicio pro fim
+                        dataset[ri]=g;
+                        ri++;//incrementa o ponteiro do inicio
+                    }
 
                     //id minimo
                     if(g.id < idMin){
@@ -88,8 +101,9 @@ class LeitorGameInfo : protected LeitorBase
                         idMax = g.id;
                     }
 
-                    linePos++;
-                    if(linePos>=numRegistros){
+                    if(ri > rf){
+                        //quando os ponteiros de inicio e fim forem iguais
+                        //o vetor foi totalmente preenchido
                         break;
                     }     
                 }

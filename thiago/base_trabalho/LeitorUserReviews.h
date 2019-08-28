@@ -1,7 +1,7 @@
 /**
     Universidade Federal de Juiz de Fora
     LeitorUserReviews.h
-    Propósito: Leitor do arquivo pre processado 'bgg-13m-reviews.csv' 
+    Propósito: Leitor do arquivo pre processado 'bgg-13m-reviews.csv'
 
     @version 1.0 18/08/19
 */
@@ -26,7 +26,7 @@ class LeitorUserReviews : protected LeitorBase
             this->numRegistros = numRegistros;
             lerArquivo();
         };
-        ~LeitorUserReviews(){}; 
+        ~LeitorUserReviews(){};
 
         UserReview* getDataset(){
             return dataset;
@@ -39,9 +39,8 @@ class LeitorUserReviews : protected LeitorBase
         string line;
         ifstream arqEntrada;
         bool headerProcessado;
-        int linePos;
-        int idMin;
-        int idMax;
+        int ri, rf;
+        int idMin, idMax;
 
         void lerArquivo(){
             //abre o arquivo
@@ -55,7 +54,7 @@ class LeitorUserReviews : protected LeitorBase
             }
 
             headerProcessado=false;
-            
+
             while (getline(arqEntrada, line))
             {
                 vector<string> result = explode(line, ',');
@@ -66,16 +65,31 @@ class LeitorUserReviews : protected LeitorBase
 
                     //inicia o vetor de objetos do dataset
                     dataset = new UserReview[numRegistros];
-                    linePos=0;
+
+                    //guarda o id minimo e máximo do dataset
                     idMin=99999999;
                     idMax=-99999999;
+                    ri=0;//aponta pro inicio do dataset
+                    rf=numRegistros-1;//aponta pro fim do dataset
                 } else {
-                    //preenche o dataset
+
+                    //cria o objeto
                     UserReview u;
                     u.id = stoi(result[0]);
                     u.user = result[1];
                     u.rating = stof(result[2]);
-                    dataset[linePos] = u;
+
+                    if(getRand(10) > 5){
+                        //se o numero aleatorio for maior que 5
+                        //coloca o numero do final pro inicio
+                        dataset[rf]=u;
+                        rf--;//decrementa o ponteiro do fim
+                    } else {
+                        //se o numero aleatorio for menor ou igual a 5
+                        //coloca o numero do inicio pro fim
+                        dataset[ri]=u;
+                        ri++;//incrementa o ponteiro do inicio
+                    }
 
                     //id minimo
                     if(u.id < idMin){
@@ -86,11 +100,11 @@ class LeitorUserReviews : protected LeitorBase
                         idMax = u.id;
                     }
 
-
-                    linePos++;
-                    if(linePos>=numRegistros){
+                    if(ri > rf){
+                        //quando os ponteiros de inicio e fim forem iguais
+                        //o vetor foi totalmente preenchido
                         break;
-                    }                    
+                    }
                 }
             }
 

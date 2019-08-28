@@ -10,11 +10,11 @@
     @version 1.0 07/08/19
 */
 #include <iostream>
-
-#include "Memoria.h"
-#include "Log.h"
 #include <time.h>
 #include <chrono>
+
+//#include "Memoria.h"
+#include "Log.h"
 //classes de entidade
 #include "UserReview.h"
 #include "GameInfo.h"
@@ -40,20 +40,20 @@ uint64_t unix_timestamp()
 
 int main(int argc, char *argv[])
 {
-    Memoria memInfo;
+    //Memoria memInfo;
     //cout << "Uso de memoria atual: " << memInfo.getCurrentRSS() << endl;
-    int peakMemoryIni = memInfo.getPeakRSS();
+    //int peakMemoryIni = memInfo.getPeakRSS();
 
     cout << "---------- INICIO -----------" << endl;
-/*
+
     int numRegistros = 100;
     LeitorGameInfo *gameInfo = new LeitorGameInfo(numRegistros);
 
     GameInfo *dataset = gameInfo->getDataset();
 
     cout << numRegistros << " registros do arquivo de Game Info" << endl;
-    */
-    /*
+    
+    
     for(int i=0; i<numRegistros; i++){
         GameInfo gameInfo = dataset[i];
         cout << "id: " << gameInfo.id << ", boardgamecategory: ";
@@ -61,30 +61,30 @@ int main(int argc, char *argv[])
             cout << gameInfo.boardgamecategory[j] << ", ";
         }
         cout << endl;
-    }*/
+    }
 
     //////////////////
     cout << endl;
-/*
+
     LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistros);
 
     UserReview *dataset2 = userReviews->getDataset();
 
     cout << numRegistros << " registros do arquivo de User Reviews" << endl;
-    */
-    /*
+    
+    
     for(int i=0; i<numRegistros; i++){
         UserReview userReview = dataset2[i];
         cout << "id: " << userReview.id << ", ";
         cout << "user: " << userReview.user << ", ";
         cout << "rating: " << userReview.rating << endl;
     }
-    */
+    
 
     //////////////////
     cout << endl;
 
-    int numRegistrosUsrRated = 500;
+    int numRegistrosUsrRated = 50;
     LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
     UsersRated *dataset3 = usersRated->getDataset();
@@ -106,11 +106,11 @@ int main(int argc, char *argv[])
     //SelectionSort<UsersRated> *selectionSort = new SelectionSort<UsersRated>();
     //selectionSort->ordenar(dataset3, numRegistrosUsrRated);
 
-    //MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
-    //mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+    MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
+    mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
-    QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
-    quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+    //QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
+    //quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
     //calcula o tempo
     uint64_t fim = unix_timestamp();
@@ -126,10 +126,10 @@ int main(int argc, char *argv[])
     }
     
 
-    cout << inicio << ", " << fim << endl;
+    //cout << inicio << ", " << fim << endl;
 
     cout << endl << "Tempo de execucao: " << tempo << " seg" << endl;
-
+    /*
     int memUsada = memInfo.getPeakRSS() - peakMemoryIni;
     float memUsadaKB = memUsada / (float)1024;
     //cout << "Uso de memoria atual: " << memInfo.getCurrentRSS() << endl;
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
         float memUsadaMB = memUsadaKB / (float)1024;
         cout << "Maximo de memoria usada: " << memUsadaMB << "Mb" << endl;
     }
-    
+    */
     
     return 0;
 }

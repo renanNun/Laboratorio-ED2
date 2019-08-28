@@ -38,9 +38,8 @@ class LeitorUsersRated : protected LeitorBase
         string line;
         ifstream arqEntrada;
         bool headerProcessado;
-        int linePos;
-        int idMin;
-        int idMax;
+        int ri, rf;
+        int idMin, idMax;
 
         void lerArquivo(){
             //abre o arquivo
@@ -66,32 +65,46 @@ class LeitorUsersRated : protected LeitorBase
 
                     //inicia o vetor de objetos do dataset
                     dataset = new UsersRated[numRegistros];
-                    linePos=0;
+
+                    //guarda o id minimo e máximo do dataset
                     idMin=99999999;
                     idMax=-99999999;
+                    ri=0;//aponta pro inicio do dataset
+                    rf=numRegistros-1;//aponta pro fim do dataset
                 } else {
-                    //preenche o dataset
-                    //cout << getRand(1) << endl;
-                    //if(getRand(1)){
-                        UsersRated u;
-                        u.id = stoi(result[0]);
-                        u.usersRated = stoi(result[1]);
-                        dataset[linePos] = u;
 
-                        //id minimo
-                        if(u.id < idMin){
-                            idMin = u.id;
-                        }
-                        //id maximo
-                        if(u.id > idMax){
-                            idMax = u.id;
-                        }
+                    //cria o objeto
+                    UsersRated u;
+                    u.id = stoi(result[0]);
+                    u.usersRated = stoi(result[1]);
 
-                        linePos++;
-                        if(linePos>=numRegistros){
-                            break;
-                        }   
-                    //}                 
+                    if(getRand(10) > 5){
+                        //se o numero aleatorio for maior que 5
+                        //coloca o numero do final pro inicio
+                        dataset[rf]=u;
+                        rf--;//decrementa o ponteiro do fim
+                    } else {
+                        //se o numero aleatorio for menor ou igual a 5
+                        //coloca o numero do inicio pro fim
+                        dataset[ri]=u;
+                        ri++;//incrementa o ponteiro do inicio
+                    }
+
+                    //id minimo
+                    if(u.id < idMin){
+                        idMin = u.id;
+                    }
+                    //id maximo
+                    if(u.id > idMax){
+                        idMax = u.id;
+                    }
+
+                    if(ri > rf){
+                        //quando os ponteiros de inicio e fim forem iguais
+                        //o vetor foi totalmente preenchido
+                        break;
+                    }   
+            
                 }
             }
 
