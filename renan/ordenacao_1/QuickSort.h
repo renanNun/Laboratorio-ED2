@@ -30,24 +30,22 @@ private:
         int pivo = vetor[fim];
 
         for(int j = inicio; j <= fim - 1; j++){
-            //cout << "passou aqui" << endl;
-            if(vetor[j] <= pivo){
+            if(vetor[j] <= pivo){ //Problema aqui
                 i++;
-                troca(&vetor[i],&vetor[j]);
+                troca(vetor,i,j);
             }
 
         }
 
-        troca(&vetor[i+1],&vetor[fim]);
+        troca(vetor,i+1,fim);
         return (i + 1);
 
     };  
 
-    void troca(int* a, int* b){
-        int* t = a;
-        a = b;
-        b = t;
-        //cout << "trocou" << endl;
+    void troca(int* vetor, int i, int j){
+        int t = vetor[i];
+        vetor[i] = vetor[j];
+        vetor[j] = t;
     };
 
 };  

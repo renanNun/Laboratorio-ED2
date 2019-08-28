@@ -4,7 +4,7 @@
     Propósito: Implementação do algoritmo QuickSort.
 
     @author Renan Nunes
-    @version 1.0 21/08/19
+    @version 2.0 27/08/19
 */
 
 #ifndef QUICKSORT_H
@@ -23,44 +23,38 @@ class QuickSort
 
         void ordenar(T* vet,int inicio, int fim){
 
-            int pivo, i, j;
-
-            i = inicio;
-            j = fim;
-
-            if (vet[i].id < vet[j].id)
+            if (inicio < fim)
             {
-                pivo = auxQuickSort(vet,i,j);
+                int p = particao(vet,inicio,fim);
 
-                ordenar(vet, i, j-1);
-                ordenar(vet, pivo + 1,j);
+                ordenar(vet, inicio, p-1);
+                ordenar(vet, p + 1,fim);
             }
 
         };
 
     private:
 
-        int auxQuickSort(T* vet,int inicio, int fim){
+        int particao(T* vet,int inicio, int fim){
 
-            int i,pivo,j;
-            T aux;
-            pivo = vet[fim].id;
-            i = inicio-1;
-
-            for(j = inicio; j <= fim - 1; j++){
+            int i = inicio - 1;
+            
+            int pivo = vet[fim].id;
+            for(int j = inicio; j <= fim - 1; j++){
                 if(vet[j].id <= pivo)
                 {
                     i++;
-                    aux = vet[i];
-                    vet[i] = vet[j];
-                    vet[j] = aux;
+                    troca(vet,i,j);
                 }
             }
-            aux = vet[i+1];
-            vet[i+1] = vet[fim];
-            vet[fim] = aux;
-            
+            troca(vet,i+1,fim);
             return (i+1);
+        };
+
+        void troca(T* vet,int i,int j){
+            T aux = vet[i];
+            vet[i] = vet[j];
+            vet[j] = aux;
         };
 
 };
