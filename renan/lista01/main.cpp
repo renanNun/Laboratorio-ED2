@@ -52,14 +52,29 @@ void merge(int* x, int c1,int f1,int c2,int f2){
 /**
  * Número 3
 */
-int particao(){
+void troca(int* x,int i,int j);
 
-}
+ int particao(int *vetor,int inicio,int fim){
+    int i = inicio - 1;
+    int pivo = vetor[fim];
+
+    for(int j = inicio; j <= fim - 1; j++){
+        if(vetor[j] <= pivo){ 
+            i++;
+            troca(vetor,i,j);
+        }
+
+    }
+
+    troca(vetor,i+1,fim);
+    return (i + 1);
+
+ } 
 
 void quickFind(int* x, int inicio, int fim,int k){
     
     if(inicio < fim){
-        int p = particao();
+        int p = particao(x,inicio,fim);
 
         quickFind(x,p+1,fim,k);
         quickFind(x,inicio,p-1,k);
@@ -76,11 +91,7 @@ void heap(){
 /**
  * Número 5
 */
-void troca(int* x,int i,int j){
-    int aux = x[i];
-    x[i] = x[j];
-    x[j] = aux;
-}
+void troca(int* x,int i,int j);
 
 void heapify(int* x,int n, int i){
     int p = (n/2) -1;
@@ -130,6 +141,12 @@ void imprime(int* vet, int tam){
         cout << vet[i] << " ";
     }
     cout << endl;
+}
+
+void troca(int* x,int i,int j){
+    int aux = x[i];
+    x[i] = x[j];
+    x[j] = aux;
 }
 
 int main(){
