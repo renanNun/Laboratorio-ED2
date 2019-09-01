@@ -29,7 +29,7 @@
 #include "ordenacao/SelectionSort.h"
 #include "ordenacao/MergeSort.h"
 #include "ordenacao/QuickSort.h"
-#include "ordenacao/HeapSort.h"
+#include "ordenacao/Heapsort.h"
 
 using namespace std;
 
