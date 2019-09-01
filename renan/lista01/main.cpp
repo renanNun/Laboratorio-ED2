@@ -11,7 +11,7 @@ using namespace std;
 
 /**
  * Exercício Número 1
- * a) Enquanto todo o vetor não for percorrido ou a chave não for falsa, a ordenação não terminará
+ * a)Enquanto a chave boolean não mudar indicando que o vetor foi totalmente trocado o laço continuará
  * b)implementação abaixo
  * c) O custo dessa operação será de O(n²), devido a presença de dois laços nessa função
 */
@@ -39,7 +39,32 @@ void par_Impar(int* v,int tam){
 /**
  * Número 2
 */
-void merge(int* x, int c1,int f1,int c2,int f2){
+void mergeIntervals(int* x, int c1,int f1,int c2,int f2){
+    int meio = ((c1 + f2) / 2);
+    int comeco2 = meio+1;
+
+    if(x[meio] <= x[comeco2])
+        return;
+
+    while(c1 <= meio && comeco2 <= f2)
+    {
+        if(x[c1] <= x[comeco2]){
+            comeco2++;
+        } else {
+            int valor = x[comeco2];
+            int index = comeco2;
+
+            while(index != c1){
+                x[index] = x[index-1];
+                index--;
+            }
+            x[c1] = valor;
+
+            c1++;
+            meio++;
+            comeco2++;
+        }
+    }
 }
 
 /**
@@ -147,10 +172,12 @@ void troca(int* x,int i,int j){
 int main(){
 
     int teste1[] = {7,1,3,10,17,2,21,9};
-    int teste2[] = {7,1,3,10,17,2,21,9};
+    int teste2[] = {12,13,14,15,3,4,5,6};
     int teste3[] = {7,1,3,10,17,2,21,9};
     int teste4[] = {7,1,3,10,17,2,21,9};
     int teste5[] = {7,1,3,10,17,2,21,9};
+
+    int testeMax[] = {99,8,7,65,82,84,72,82,71,3,1,9,22,10,1,100,555,657,983};
 
     cout << "Número 1) Transposição Par_Impar" << endl;
     cout << "ini: ";
@@ -159,6 +186,15 @@ int main(){
     par_Impar(teste1, 8);
     cout << "fim: ";
     imprime(teste1, 8);
+    cout << endl;
+
+    cout << "Número 2) MergeSort Modificado" << endl;
+    cout << "ini: ";
+    imprime(teste2, 8);
+    //executa ordenação
+    mergeIntervals(teste2,0,3,4,7);
+    cout << "fim: ";
+    imprime(teste2, 8);
     cout << endl;
 
     cout << "Número 3) QuickFind" << endl;
