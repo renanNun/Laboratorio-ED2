@@ -47,23 +47,72 @@ void par_Impar(int *v, int tam){
  * Número 2
 */
 void merge(int* x, int c1,int f1,int c2,int f2){
-    int meio;
-    int inicio, fim;
-
-    inicio = c1;
-    fim = f2;
-
-    if(inicio < fim){
-        meio = (inicio + fim)/2;
-    }
 }
 
 /**
  * Número 3
 */
-void quickFind(int* x, int inicio, int fim int k){
+void quickFind(int* x, int inicio, int fim,int k){
 
 }
+
+/**
+ * Número 4
+*/
+void heap(){
+
+}
+
+/**
+ * Número 5
+*/
+void troca(int* x,int i,int j){
+    int aux = x[i];
+    x[i] = x[j];
+    x[j] = aux;
+}
+
+void heapify(int* x,int n, int i){
+    int p = (n/2) -1;
+    bool existe = true;
+
+    while(p > -1){
+        int pai = x[p];
+        int f1 = x[2*p];
+        int f2 = x[2*p+1];
+
+        if(2*p+1 >= n){
+            existe = false;
+        }
+
+        if(f1 < f2 && existe){
+            if(pai < f2){
+                troca(x,p,2*p+1);
+            }
+        } else {
+            if(pai < f1){
+                troca(x,p,2*p);
+            }
+        }
+        p--;
+    }
+}
+
+void maxHeap(int* x,int n){
+    for(int i = n-1; i > 1; i--){
+        heapify(x,n,i);
+        troca(x,0,i);
+    }
+}
+
+void corrige(int* x,int n){
+    int i = n;
+    while(i >= 2 && x[i/2] < x[i]){
+        troca(x,i/2,i);
+        i = i/2;
+    }
+}
+
 
 /*Funções para teste*/
 void imprime(int* vet, int tam){
@@ -76,6 +125,7 @@ void imprime(int* vet, int tam){
 int main(){
 
     int teste1[] = {7,1,3,10,17,2,21,9};
+    int teste5[] = {7,1,3,10,17,2,21,9};
 
     cout << "Número 1) Transposição Par_Impar" << endl;
     cout << "ini: ";
@@ -84,6 +134,16 @@ int main(){
     par_Impar(teste1, 8);
     cout << "fim: ";
     imprime(teste1, 8);
+    cout << endl;
+
+
+    cout << "Número 5) Max Heap" << endl;
+    cout << "ini: ";
+    imprime(teste5, 8);
+    //executa ordenação
+    maxHeap(teste5, 8);
+    cout << "fim: ";
+    imprime(teste5, 8);
     cout << endl;
 
     return 0;
