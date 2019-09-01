@@ -52,8 +52,18 @@ void merge(int* x, int c1,int f1,int c2,int f2){
 /**
  * Número 3
 */
-void quickFind(int* x, int inicio, int fim,int k){
+int particao(){
 
+}
+
+void quickFind(int* x, int inicio, int fim,int k){
+    
+    if(inicio < fim){
+        int p = particao();
+
+        quickFind(x,p+1,fim,k);
+        quickFind(x,inicio,p-1,k);
+    }
 }
 
 /**
@@ -125,6 +135,9 @@ void imprime(int* vet, int tam){
 int main(){
 
     int teste1[] = {7,1,3,10,17,2,21,9};
+    int teste2[] = {7,1,3,10,17,2,21,9};
+    int teste3[] = {7,1,3,10,17,2,21,9};
+    int teste4[] = {7,1,3,10,17,2,21,9};
     int teste5[] = {7,1,3,10,17,2,21,9};
 
     cout << "Número 1) Transposição Par_Impar" << endl;
@@ -134,6 +147,15 @@ int main(){
     par_Impar(teste1, 8);
     cout << "fim: ";
     imprime(teste1, 8);
+    cout << endl;
+
+    cout << "Número 3) QuickFind" << endl;
+    cout << "ini: ";
+    imprime(teste3, 8);
+    //executa ordenação
+    quickFind(teste3, 0,7,5);
+    cout << "fim: ";
+    imprime(teste3, 8);
     cout << endl;
 
 
