@@ -15,31 +15,24 @@ using namespace std;
  * b)implementação abaixo
  * c) O custo dessa operação será de O(n²), devido a presença de dois laços nessa função
 */
-void par_Impar(int *v, int tam){
-    int z = 1;
-    bool chave = true;
-    while(z < tam || chave){
-        chave = false;
-        if((z%2) != 0){
-            for (int i = 1; i < tam; i = i+2){
-                if(v[i] > v[i+1]){
-                    int aux = v[i];
-                    v[i] = v[i+1];
-                    v[i] = aux;
-                    chave = true;
-                }
-            }
-        } else {
-            for(int i = 0; i < tam; i = i+2){
-                if(v[i] > v[i+1]){
-                    int aux = v[i];
-                    v[i] = v[i+1];
-                    v[i+1] = aux;
-                    chave = true;
-                }
+void troca(int* x,int i,int j);
+
+void par_Impar(int* v,int tam){
+    bool chave = false;
+    while(!chave){
+        chave = true;
+        for(int i = 1; i < tam-1; i+= 2){
+            if(v[i]> v[i+1]){
+                troca(v,i,i+1);
+                chave = false;
             }
         }
-        z++;
+        for(int i = 0; i < tam-1; i += 2){
+            if(v[i] > v[i+1]){
+                troca(v,i,i+1);
+                chave = false;
+            }
+        }
     }
 }
 
@@ -71,7 +64,7 @@ void troca(int* x,int i,int j);
 
  } 
 
-void quickFind(int* x, int inicio, int fim,int k){
+int quickFind(int* x, int inicio, int fim,int k){
     
     if(inicio < fim){
         int p = particao(x,inicio,fim);
@@ -79,6 +72,8 @@ void quickFind(int* x, int inicio, int fim,int k){
         quickFind(x,p+1,fim,k);
         quickFind(x,inicio,p-1,k);
     }
+    
+    return x[k];
 }
 
 /**
@@ -169,10 +164,10 @@ int main(){
     cout << "Número 3) QuickFind" << endl;
     cout << "ini: ";
     imprime(teste3, 8);
+    int k = 5;
     //executa ordenação
-    quickFind(teste3, 0,7,5);
-    cout << "fim: ";
-    imprime(teste3, 8);
+    int valor = quickFind(teste3, 0,7,k-1);
+    cout << k << "º valor:  " << valor << endl;
     cout << endl;
 
 
