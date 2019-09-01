@@ -98,23 +98,23 @@ int main(int argc, char *argv[])
     }
 
     uint64_t inicio = unix_timestamp();
-    //BubbleSort<UsersRated> *bubbleSort = new BubbleSort<UsersRated>();
-    //bubbleSort->ordenar(dataset3, numRegistrosUsrRated);
+    BubbleSort<UsersRated> *bubbleSort = new BubbleSort<UsersRated>();
+    bubbleSort->ordenar(dataset3, numRegistrosUsrRated);
 
-    //InsertionSort<UsersRated> *insertionSort = new InsertionSort<UsersRated>();
-    //insertionSort->ordenar(dataset3, numRegistrosUsrRated);
+    InsertionSort<UsersRated> *insertionSort = new InsertionSort<UsersRated>();
+    insertionSort->ordenar(dataset3, numRegistrosUsrRated);
 
-    //SelectionSort<UsersRated> *selectionSort = new SelectionSort<UsersRated>();
-    //selectionSort->ordenar(dataset3, numRegistrosUsrRated);
+    SelectionSort<UsersRated> *selectionSort = new SelectionSort<UsersRated>();
+    selectionSort->ordenar(dataset3, numRegistrosUsrRated);
 
-    //MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
-    //mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+    MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
+    mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
-    //QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
-    //quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+    QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
+    quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
-    HeapSort<UsersRated> *heapSort = new HeapSort<UsersRated>();
-    heapSort->ordenar(dataset3, numRegistrosUsrRated-1);
+    //HeapSort<UsersRated> *heapSort = new HeapSort<UsersRated>();
+    //heapSort->ordenar(dataset3, numRegistrosUsrRated-1);
 
     //calcula o tempo
     uint64_t fim = unix_timestamp();
