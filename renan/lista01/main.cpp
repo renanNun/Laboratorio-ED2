@@ -90,15 +90,22 @@ void troca(int* x,int i,int j);
  } 
 
 int quickFind(int* x, int inicio, int fim,int k){
-    
-    if(inicio < fim){
-        int p = particao(x,inicio,fim);
 
-        quickFind(x,p+1,fim,k);
-        quickFind(x,inicio,p-1,k);
+    if(k > 0 && k <= fim-inicio +1){
+
+        int pos = particao(x,inicio,fim);
+
+        if(pos - inicio == k-1)
+            return x[pos];
+        if(pos - inicio > k - 1)
+            return quickFind(x,inicio,pos-1,k);
+
+        return quickFind(x,pos+1,fim, k-pos+inicio-1);
+
     }
-    
-    return x[k];
+
+    return 0;
+
 }
 
 /**
@@ -173,7 +180,7 @@ int main(){
 
     int teste1[] = {7,1,3,10,17,2,21,9};
     int teste2[] = {12,13,14,15,3,4,5,6};
-    int teste3[] = {7,1,3,10,17,2,21,9};
+    int teste3[] = {7, 10, 4, 3, 20, 15};
     int teste4[] = {7,1,3,10,17,2,21,9};
     int teste5[] = {7,1,3,10,17,2,21,9};
 
@@ -199,10 +206,10 @@ int main(){
 
     cout << "Número 3) QuickFind" << endl;
     cout << "ini: ";
-    imprime(teste3, 8);
-    int k = 5;
+    imprime(teste3, 6);
+    int k = 3;
     //executa ordenação
-    int valor = quickFind(teste3, 0,7,k-1);
+    int valor = quickFind(teste3, 0,5,k);
     cout << k << "º valor:  " << valor << endl;
     cout << endl;
 
