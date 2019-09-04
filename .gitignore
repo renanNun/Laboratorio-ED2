@@ -140,3 +140,6 @@ obj/
 ### diretorios extra
 
 trabalho/datasets/
+luan/base_trabalho/datasets/preprocessado/
+renan/base_trabalho/datasets/preprocessado/
+lucas/base_trabalho/datasets/preprocessado/
