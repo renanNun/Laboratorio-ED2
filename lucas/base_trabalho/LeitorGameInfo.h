@@ -22,7 +22,7 @@ class LeitorGameInfo : protected LeitorBase
     public:
 
         LeitorGameInfo(int numRegistros){
-            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"bgg-13m-reviews.csv";
+            this->caminhoArquivo = "C:\\Users\\lrpes\\Documents\\Faculdade\\ED2\\Trabalho\\Laboratorio-ED2\\lucas\\base_trabalho\\datasets\\preprocessado\\2019-05-02.csv";
             this->numRegistros = numRegistros;
             lerArquivo();            
         };

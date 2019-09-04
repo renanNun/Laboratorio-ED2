@@ -21,7 +21,9 @@ class LeitorUsersRated : protected LeitorBase
     public:
 
         LeitorUsersRated(int numRegistros){
-            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"2019-05-02.csv";
+
+            this->caminhoArquivo = "C:\\Users\\lrpes\\Documents\\Faculdade\\ED2\\Trabalho\\Laboratorio-ED2\\lucas\\base_trabalho\\datasets\\preprocessado\\2019-05-02.csv";
+//            this->caminhoArquivo = "datasets"+getDirSep()+"preprocessado"+getDirSep()+"2019-05-02.csv";
             this->numRegistros = numRegistros;
             lerArquivo();
         };
