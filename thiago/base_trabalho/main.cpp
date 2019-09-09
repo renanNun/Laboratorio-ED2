@@ -29,6 +29,8 @@
 #include "ordenacao/SelectionSort.h"
 #include "ordenacao/MergeSort.h"
 #include "ordenacao/QuickSort.h"
+//hashing
+#include "hashing/HashEndAberto.h"
 
 using namespace std;
 
@@ -45,7 +47,7 @@ int main(int argc, char *argv[])
     //int peakMemoryIni = memInfo.getPeakRSS();
 
     cout << "---------- INICIO -----------" << endl;
-
+/*
     int numRegistros = 100;
     LeitorGameInfo *gameInfo = new LeitorGameInfo(numRegistros);
 
@@ -62,10 +64,10 @@ int main(int argc, char *argv[])
         }
         cout << endl;
     }
-
+*/
     //////////////////
     cout << endl;
-
+/*
     LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistros);
 
     UserReview *dataset2 = userReviews->getDataset();
@@ -79,11 +81,11 @@ int main(int argc, char *argv[])
         cout << "user: " << userReview.user << ", ";
         cout << "rating: " << userReview.rating << endl;
     }
-    
+*/    
 
     //////////////////
     cout << endl;
-
+/*
     int numRegistrosUsrRated = 50;
     LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
@@ -95,7 +97,7 @@ int main(int argc, char *argv[])
         cout << "id: " << dataset3[i].id << ", ";
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
-    
+*/
     uint64_t inicio = unix_timestamp();
     //BubbleSort<UsersRated> *bubbleSort = new BubbleSort<UsersRated>();
     //bubbleSort->ordenar(dataset3, numRegistrosUsrRated);
@@ -109,9 +111,9 @@ int main(int argc, char *argv[])
     //MergeSort<UsersRated> *mergeSort = new MergeSort<UsersRated>();
     //mergeSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
-    QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
-    quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
-
+    //QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
+    //quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
+/*
     //calcula o tempo
     uint64_t fim = unix_timestamp();
     double tempo = (fim-inicio)/(double)1000;
@@ -129,6 +131,7 @@ int main(int argc, char *argv[])
     cout << inicio << ", " << fim << endl;
 
     cout << endl << "Tempo de execucao: " << tempo << " seg" << endl;
+    */
     /*
     int memUsada = memInfo.getPeakRSS() - peakMemoryIni;
     float memUsadaKB = memUsada / (float)1024;
@@ -141,7 +144,16 @@ int main(int argc, char *argv[])
         float memUsadaMB = memUsadaKB / (float)1024;
         cout << "Maximo de memoria usada: " << memUsadaMB << "Mb" << endl;
     }
-    */
+*/
+
+    int numRegistrosUsrReview = 50;
+    LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistrosUsrReview);
+    UserReview *dataset2 = userReviews->getDataset();
+
+    HashEndAberto *hashEndAberto = new HashEndAberto(dataset2, numRegistrosUsrReview);
+
+    hashEndAberto->construir();
+    hashEndAberto->imprime();
     
     return 0;
 }
