@@ -26,4 +26,4 @@ add_executable(base_trabalho
         Log.h
         main.cpp
         UserReview.h
-        UsersRated.h hashing/hashmap.h)
+        UsersRated.h hashing/hashmap.h ordenacao/QuickSortInsertion.h ordenacao/RadixSort.h)

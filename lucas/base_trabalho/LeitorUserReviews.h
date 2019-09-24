@@ -22,7 +22,7 @@ class LeitorUserReviews : protected LeitorBase
     public:
 
         LeitorUserReviews(int numRegistros){
-            this->caminhoArquivo = "C:\\Users\\lrpes\\Documents\\Faculdade\\ED2\\Trabalho\\Laboratorio-ED2\\lucas\\base_trabalho\\datasets\\preprocessado\\2019-05-02.csv";
+            this->caminhoArquivo = "C:\\Users\\lrpes\\Documents\\Faculdade\\ED2\\Trabalho\\Laboratorio-ED2\\lucas\\base_trabalho\\datasets\\preprocessado\\bgg-13m-reviews.csv";
             this->numRegistros = numRegistros;
             lerArquivo();
         };

@@ -18,42 +18,83 @@ using namespace std;
 class hashmap {
 
 public:
+    //TODO: Clean debug couts
     hashmap(UserReview* vetor, int tam) {
+        this->tamanho = tam;
+        this->hasherModule = 13;
         newHashMap = new UserReview[tam];
         for(int i = 0; i<tam; i++){
             newHashMap[i] = UserReview();
             newHashMap[i].id = -1;
         }
         for(int i = 0; i<tam; i++){
-            int hashNumero = hasher(vetor[i].id,vetor[i].user, tam);
-            cout << "ID: "<<vetor[i].id << endl;
-            cout << "Resultado Hash: " << hashNumero << endl;
+            int nomeValue = this->contaLetras(vetor[i].user);
+            int hashNumero = this->hasher(vetor[i].id, nomeValue);
+            //cout << "ID: "<<vetor[i].id << endl;
+            //cout << "Resultado Hash: " << hashNumero << endl;
             if(newHashMap[hashNumero].id == -1){
                 newHashMap[hashNumero] = vetor[i];
-                cout << "Posição Colocada: " <<hashNumero << endl;
+                //cout << "Posicao Colocada: " <<hashNumero << endl;
             } else {
-                hashNumero++;
-                while(newHashMap[hashNumero].id != -1){
-                    if(hashNumero == tam){
-                        hashNumero = 0;
-                    }
-                    hashNumero++;
+                int j = 1;
+                int newHashNumero = hashNumero;
+                while(newHashMap[newHashNumero].id != -1){
+                    //cout << "Posicao Antiga: " <<newHashNumero << endl;
+
+                    j++;
+                    newHashNumero = this->rehasher(vetor[i].id,nomeValue,j,hashNumero);
                 }
-                newHashMap[hashNumero] = vetor[i];
+                //cout << "Posicao Colocada: " <<newHashNumero << endl;
+
+                newHashMap[newHashNumero] = vetor[i];
             }
         }
     };
 
     ~hashmap() {};
 
+    void printHashMap(){
+        for(int i = 0; i < tamanho;i++){
+            cout << "Position: " << i << ", Key: (" << newHashMap[i].user << ", " << newHashMap[i].id << "), Value: " << newHashMap[i].rating << endl;
+        }
+    };
+
+    float getRating(string name, int id){
+        int nameValue = this->contaLetras(name);
+        int hashID = hasher(id, nameValue);
+        int oldHashID = hashID;
+        int tryCounter = 1;
+        while(newHashMap[hashID].id!=id && newHashMap[hashID].user!=name){
+            hashID = rehasher(id,nameValue,tryCounter,oldHashID);
+            if(tryCounter>this->tamanho){
+                cout << "O item nao esta na lista, rating sera retornado -1" << endl;
+                return -1;
+            }
+            tryCounter++;
+        }
+        return newHashMap[hashID].rating;
+
+    };
+
 private:
     UserReview* newHashMap;
-    int hasher(int id, string nome, int tam){
+    int tamanho;
+    int hasherModule;
+
+    int contaLetras(string nome){
         int total = 0;
         for(int i = 0; i<nome.length(); i++){
             total = total + int(nome.at(i));
         }
-        return (total*id)%tam;
+        return total;
+    };
+
+    int hasher(int id, int nomeValue){
+        return (nomeValue*id)%this->tamanho;
+    };
+
+    int rehasher(int id, int nameValue, int tryNumber, int hasherValue){
+        return (hasherValue + tryNumber*(1 + (nameValue*id)%this->hasherModule))%this->tamanho;
     };
 };
 

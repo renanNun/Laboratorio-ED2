@@ -28,6 +28,9 @@
 #include "ordenacao/MergeSort.h"
 #include "ordenacao/QuickSort.h"
 #include "ordenacao/Heapsort.h"
+#include "ordenacao/RadixSort.h"
+//hashing duplo
+#include "hashing/hashmap.h"
 
 using namespace std;
 
@@ -44,8 +47,8 @@ int main(int argc, char *argv[])
     //////////////////
     cout << endl;
 
-    int numRegistrosUsrRated = 5;
-    LeitorUsersRated *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
+    int numRegistrosUsrRated = 500;
+    auto *usersRated = new LeitorUsersRated(numRegistrosUsrRated);
 
     UsersRated *dataset3 = usersRated->getDataset();
 
@@ -56,13 +59,21 @@ int main(int argc, char *argv[])
         cout << "users rated: " << dataset3[i].usersRated << endl;
     }
 
+
+
+    /*
+    int numRegistrosUserReviews = 15000;
+    LeitorUserReviews *userReviews = new LeitorUserReviews(numRegistrosUserReviews);
+
+    UserReview *datasetHash = userReviews ->getDataset();
+    */
+    cout << "Arquivo Lido" << endl;
     uint64_t inicio = unix_timestamp();
+
+
 
     //BubbleSort<UsersRated> *bubbleSort = new BubbleSort<UsersRated>();
     //bubbleSort->ordenar(dataset3, numRegistrosUsrRated);
-
-    //InsertionSort<UsersRated> *insertionSort = new InsertionSort<UsersRated>();
-    //insertionSort->ordenar(dataset3, numRegistrosUsrRated);
 
     //SelectionSort<UsersRated> *selectionSort = new SelectionSort<UsersRated>();
     //selectionSort->ordenar(dataset3, numRegistrosUsrRated);
@@ -73,21 +84,31 @@ int main(int argc, char *argv[])
     //QuickSort<UsersRated> *quickSort = new QuickSort<UsersRated>();
     //quickSort->ordenar(dataset3, 0, numRegistrosUsrRated-1);
 
-    HeapSort<UsersRated> *heapSort = new HeapSort<UsersRated>();
-    heapSort->ordenar(dataset3, numRegistrosUsrRated-1);
+    //HeapSort<UsersRated> *heapSort = new HeapSort<UsersRated>();
+    //heapSort->ordenar(dataset3, numRegistrosUsrRated-1);
+
+    RadixSort<UsersRated> *radixSort = new RadixSort<UsersRated>();
+    radixSort->ordenar(dataset3, numRegistrosUsrRated);
+    radixSort->print(dataset3, numRegistrosUsrRated);
+
+
+    //hashmap *doubleHashing = new hashmap(datasetHash, numRegistrosUserReviews);
 
     //calcula o tempo
     uint64_t fim = unix_timestamp();
     double tempo = (fim-inicio)/(double)1000;
 
+    //doubleHashing->printHashMap();
 
+    //cout << "Valor de (marconte, 13): " << doubleHashing->getRating("marconte", 13) << endl;
+    //cout << "Valor de (joaquina, 33): " << doubleHashing->getRating("joaquina", 33) << endl;
     //imprime o vetor
 
-    cout << endl << "registros do arquivo de Users Rated ordenados" << endl <<endl;
-    for(int i=0; i<numRegistrosUsrRated; i++){
-        cout << "id: " << dataset3[i].id << ", ";
-        cout << "users rated: " << dataset3[i].usersRated << endl;
-    }
+    //cout << endl << "registros do arquivo de Users Rated ordenados" << endl <<endl;
+    //for(int i=0; i<numRegistrosUsrRated; i++){
+    //    cout << "id: " << dataset3[i].id << ", ";
+    //    cout << "users rated: " << dataset3[i].usersRated << endl;
+    //}
 
     cout << endl << "Tempo de execucao: " << tempo << " seg" << endl;
 
